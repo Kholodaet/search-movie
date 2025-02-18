@@ -1,4 +1,3 @@
-вибиває помилку імпорту layout
 <script setup>
 import { RouterView } from "vue-router";
 import Layout from "./components/Layout/Layout.vue";

@@ -189,7 +189,6 @@ export default {
   color: #0056b3;
 }
 
-/* Анімація переходів */
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.3s ease-in-out;

@@ -55,25 +55,20 @@ export default {
   margin: 0 auto;
 }
 
-/* Стиль для сітки фільмів */
 .movie-list {
   display: grid;
-  grid-template-columns: repeat(
-    auto-fill,
-    minmax(200px, 1fr)
-  ); /* змінено на auto-fill для кращої адаптивності */
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 16px;
-  justify-items: center; /* Центрування елементів */
+  justify-items: center;
   padding: 16px 0;
 }
 
-/* Стиль для кожного елементу сітки */
 .movie-item {
   background: #1a1a1a;
   border-radius: 8px;
   overflow: hidden;
   transition: transform 0.3s ease-in-out;
-  width: 100%; /* додаємо ширину 100% */
+  width: 100%;
   display: flex;
   flex-direction: column;
 }

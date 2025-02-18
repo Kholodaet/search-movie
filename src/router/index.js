@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
 
-// Lazy-завантаження сторінок
 const HomePage = () => import("../pages/HomePage/HomePage.vue");
 const MoviesPage = () => import("../pages/MoviesPage/MoviesPage.vue");
 const MovieDetailsPage = () =>
@@ -17,7 +16,7 @@ const routes = [
     path: "/movies/:movieId",
     name: "movieDetails",
     component: MovieDetailsPage,
-    props: true, // Передача параметрів як props
+    props: true,
     children: [
       { path: "cast", name: "movieCast", component: MovieCast },
       { path: "reviews", name: "movieReviews", component: MovieReviews },
@@ -31,7 +30,6 @@ const router = createRouter({
   routes,
 });
 
-// Middleware для редіректів
 router.beforeEach((to, from, next) => {
   if (to.meta?.redirect) {
     console.log("Redirecting to:", to.meta.redirect);
