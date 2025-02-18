@@ -3,6 +3,9 @@
     <MovieList :movies="movies" v-if="movies.length > 0" />
     <Loader v-if="isLoading" />
     <ErrorMessage v-if="error" />
+    <button v-if="!isLoading && !error" @click="loadMore" class="load-more">
+      Load More
+    </button>
   </div>
 </template>
 
@@ -23,13 +26,14 @@ export default {
     const movies = ref([]);
     const isLoading = ref(false);
     const error = ref(false);
+    const page = ref(1);
 
     const fetchMovies = async () => {
       try {
         error.value = false;
         isLoading.value = true;
-        const data = await getTrendingMovies();
-        movies.value = data || [];
+        const data = await getTrendingMovies(page.value);
+        movies.value = [...movies.value, ...data];
       } catch (err) {
         error.value = true;
         console.error(err);
@@ -38,12 +42,18 @@ export default {
       }
     };
 
-    onMounted(fetchMovies);
+    const loadMore = () => {
+      page.value++;
+      fetchMovies();
+    };
+
+    onMounted(() => fetchMovies());
 
     return {
       movies,
       isLoading,
       error,
+      loadMore,
     };
   },
 };
@@ -53,43 +63,22 @@ export default {
 .container {
   padding: 16px;
   margin: 0 auto;
-}
-
-.movie-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 16px;
-  justify-items: center;
-  padding: 16px 0;
-}
-
-.movie-item {
-  background: #1a1a1a;
-  border-radius: 8px;
-  overflow: hidden;
-  transition: transform 0.3s ease-in-out;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-.movie-item:hover {
-  transform: scale(1.05);
-}
-
-.movie-item img {
-  width: 100%;
-  height: 300px;
-  object-fit: cover;
-  border-radius: 8px 8px 0 0;
-}
-
-.movie-title {
-  padding: 10px;
-  font-size: 18px;
   text-align: center;
-  color: #fff;
-  background: #333;
-  border-radius: 0 0 8px 8px;
+}
+
+.load-more {
+  margin-top: 16px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.load-more:hover {
+  background-color: #605f5f;
 }
 </style>
